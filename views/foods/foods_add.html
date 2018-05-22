@@ -1,0 +1,156 @@
+<% include ../public/head.html %>
+	<div class="container-fluid" id="content">
+		<div class="contentLeft">
+				<% include ../public/menu.html%>
+		</div>
+		<div class="row" id="content_right">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<span>饮食推荐 > 添加推荐</span>
+				</div>
+			</div>
+			<form id="form_id" class="form-horizontal" action="javascript:;">
+				<div class="form-group">
+					<label class="control-label col-sm-2">类别 : </label>
+					<div class="col-md-8">
+						<select id="typeDinner" class="form-control col-sm-6">
+							<option value="-1">请选择类别</option>
+							<option value="1">早餐</option>
+							<option value="2">中餐</option>
+							<option value="3">晚餐</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">适合季节 : </label>
+					<div class="col-md-8">
+						<select id="typeSeason" class="form-control col-sm-6">
+							<option value="-1">请选择适合季节</option>
+							<option value="1">春</option>
+							<option value="2">夏</option>
+							<option value="3">秋</option>
+							<option value="4">冬</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">所属类型 : </label>
+					<div class="col-md-8">
+						<select id="typeCase" class="form-control col-sm-6">
+							<option value="-1">请选择所属类型</option>
+							<option value="1">水果</option>
+							<option value="2">蔬菜</option>
+							<option value="3">五谷</option>
+							<option value="4">面食</option>
+							<option value="5">肉食品</option>
+							<option value="6">火锅</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">标题 : </label>
+					<div class="col-md-8">
+						<input type="text" id="title" class="form-control" placeholder="请输入标题" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">健康等级 : </label>
+					<div class="col-md-8">
+						<select id="grade" name="type" class="form-control">
+							<option value="-1">请选择</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">封面 : </label>
+					<div class="col-md-6 uploadBox" >
+						<div class="imgFile">
+							<input type="file"  name="grade" id="avator" />
+						</div>
+						<!--<button id="upload" class="btn btn-default">上传</button>-->
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">描述 : </label>
+					<div class="col-md-8">
+						<textarea id="des" rows="3" placeholder="不少于三十字..." style="resize: none;" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">详情 : </label>
+					<div class="col-md-8">
+						<script id="editor" type="text/plain" style="width:100%;height:200px;"></script>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-primary">添加</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = function(){
+			var imgUrl,imgArray,data={};
+			$("#content_right").css({"height":$(window).height()-55,'overflow':'auto'});
+			var ue = UE.getEditor("editor");
+			$("button[type=button]").click(function(){
+			var type = $("#type").val();
+			var case1 = $("#typeCase").val();
+			var season = $("#typeSeason").val();
+			var title = $("#title").val();
+			var grade = $("#grade").val();
+			var content = $("#des").val();
+			var detail = ue.getContent();
+			$.ajax({
+				url:"/news/addFoods",
+				type:"post",
+				data:{type:type,cover:imgUrl,case:case1,season:season,title:title,grade:grade,content:content,detail:detail},
+				success:function(result){
+					if(result.code<0){
+						layer.msg(result.status,{icon:2});
+					}else if(result.code>0){
+						layer.msg(result.status,{icon:1});
+					}
+				},
+				error:function(data){
+					console.log(data);
+				}
+			});
+				
+			});
+			//获取上传头像
+			$("#avator").change(function(){
+				//var type = this.files[0].type;
+				imgArray = this.files[0];
+				var data = new FormData();
+				data.append("upload",imgArray);
+				jQuery.ajax({
+					url:'/admin/upload',
+					type:"post",
+					data:data,
+					contentType: false, //不可缺参数
+	                processData: false, //不可缺参数
+					success:function(data){
+						console.log(data);
+						if(data.code==200){
+							imgUrl = data.msg;
+							var img = $("<img src='"+data.msg+"'>");
+							$(".imgFile").html(img);
+							layer.msg("上传成功",{icon:1});
+						}
+					}
+				});
+			});
+		};
+	</script>
+<% include ../public/footer.html %>

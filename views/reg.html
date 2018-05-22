@@ -1,0 +1,66 @@
+<% include public/head.html %>
+<div class="container-fluid" id="content">
+	<div class="jumbotron login">
+		<form class="form-horizontal" action="javascript:void(0)">
+		<div class="form-group">
+			<label class="control-label col-sm-2">用户名 :</label>
+			<div class="col-md-6" data-toggle="tooltip" data-placement="right" title="不能为空!">
+				<input type="text" class="form-control" placeholder="用户名" name="username" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2">密码 :</label>
+			<div class="col-md-6" data-toggle="tooltip" data-placement="right" title="不能为空!">
+				<input type="password" class="form-control" placeholder="密码" name="pwd" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2">性别 :</label>
+			<div class="col-md-6" data-toggle="tooltip" data-placement="right" title="不能为空!" style="display: flex;">
+				<label style="display: flex;align-items: center;">男<input style="margin-left: 5px;" type="radio" name="sex" value="2"/></label>
+				<label style="display: flex;align-items: center;margin-left: 10px;">女<input style="margin-left: 5px;"  type="radio" name="sex" value="1" /></label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2">昵称 :</label>
+			<div class="col-md-6" data-toggle="tooltip" data-placement="right" title="不能为空!">
+				<input type="text" class="form-control" placeholder="昵称" name="nick" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2">签名 :</label>
+			<div class="col-md-6" data-toggle="tooltip" data-placement="right" title="不能为空!">
+				<input type="text" class="form-control" placeholder="昵称" name="sign" />
+			</div>
+		</div>
+		<button type="button" class="btn btn-default col-md-offset-2 col-md-6" style="text-indent: 5px;">注册</button>
+	</div>
+	</form>	
+</div>
+<script type="text/javascript">
+	window.onload = function(){
+		$("button[type=button]").click(function(){
+			var username = $("[name=username]").val();
+			var pwd = $("[name=pwd]").val();
+			var sex = $("[type=radio]:checked").attr("value");
+			var nick = $("[name=nick]").val();
+			var sign = $("[name=sign]").val();
+			$.ajax({
+				type:"post",
+				url:"/users/reg",
+				async:true,
+				data:{username:username,password:pwd,sex:sex,nick:nick,sign:sign},
+				success:function(data){
+					if(data.code>0){
+						alert("注册成功");
+					}else if(data.code>0){
+						alert("用户存在");
+					}
+					
+				}
+			});
+		});
+	}
+	
+</script>
+<% include public/footer.html%>

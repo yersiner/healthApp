@@ -1,0 +1,79 @@
+<% include ../public/head.html %>
+	<div class="container-fluid" id="content">
+		<div class="contentLeft">
+				<% include ../public/menu.html%>
+		</div>
+		<div class="row" id="content_right">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<span>目标管理 > 添加目标</span>
+				</div>
+			</div>
+			<form id="form_id" class="form-horizontal" action="javascript:;">
+				<div class="form-group">
+					<label class="control-label col-sm-2">用户 : </label>
+					<div class="col-md-8">
+						<input type="text" class="form-control" name="username" id="username" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">目标类别 : </label>
+					<div class="col-md-8">
+						<select id="typeDinner" class="form-control col-sm-6">
+							<option value="-1">请选择类别</option>
+							<option value="0">跑步</option>
+							<option value="1">慢走</option>
+							<option value="2">爬山</option>
+							<option value="3">游泳</option>
+							<option value="4">打球</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">运动量 : </label>
+					<div class="col-md-6">
+						<input type="text" class="form-control" name="value" id="value" />
+					</div>
+					<div class="col-md-2">
+						<select id="contenttype" class="form-control">
+							<option value="-1">请选择单位</option>
+							<option value="0">KM</option>
+							<option value="1">小时</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-primary">添加</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = function(){
+			$("#content_right").css({"height":$(window).height()-55,'overflow':'auto'});
+			$("button[type=button]").click(function(){
+			var username = $("#username").val();
+			var case1 = $("#typeDinner").val(); 
+			var value = $("#value").val();
+			var unit = $("#contenttype").find("option:selected").text();
+			$.ajax({
+				url:"/managment/targetsAdd",
+				type:"post",
+				data:{username:username,type:case1,value:value,unit:unit},
+				success:function(result){
+					if(result.code<0){
+						alert(result.status);
+					}else if(result.code>0){
+						alert(result.status);
+					}
+				},
+				error:function(data){
+					console.log(data);
+				}
+			});
+				
+			});
+			
+		};
+	</script>
+<% include ../public/footer.html %>

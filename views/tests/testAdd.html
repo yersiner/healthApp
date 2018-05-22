@@ -1,0 +1,82 @@
+<% include ../public/head.html %>
+	<div class="container-fluid" id="content">
+		<div class="contentLeft">
+				<% include ../public/menu.html%>
+		</div>
+		<div class="row" id="content_right">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<span>健康管理 > 添加测试</span>
+				</div>
+			</div>
+			<form id="form_id" class="form-horizontal" action="javascript:;">
+				<div class="form-group">
+					<label class="control-label col-sm-2">用户 : </label>
+					<div class="col-md-8">
+						<input type="text" class="form-control" name="username" id="username" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">目标类别 : </label>
+					<div class="col-md-8">
+						<select id="typeDinner" class="form-control col-sm-6">
+							<option value="-1">请选择类别</option>
+							<option value="0">IBM测试</option>
+							<option value="1">综合测试</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">题库 : </label>
+					<div class="col-md-6">
+						<input type="text" class="form-control" name="number" id="number" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">分数 : </label>
+					<div class="col-md-6">
+						<input type="text" class="form-control" name="score" id="score" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">健康等级 : </label>
+					<div class="col-md-6">
+						<input type="text" class="form-control" name="grade" id="grade" />
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-primary">添加</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = function(){
+			$("#content_right").css({"height":$(window).height()-55,'overflow':'auto'});
+			$("button[type=button]").click(function(){
+			var username = $("#username").val();
+			var case1 = $("#typeDinner").val(); 
+			var number = $("#number").val();
+			var score = $("#score").val();
+			var grade = $("#grade").val();
+			$.ajax({
+				url:"/managment/addTest",
+				type:"post",
+				data:{username:username,type:case1,number:number,score:score,grade:grade},
+				success:function(result){
+					if(result.code<0){
+						layer.msg(result.status);
+					}else if(result.code>0){
+						layer.msg(result.status,{icon:1});
+					}
+				},
+				error:function(data){
+					console.log(data);
+				}
+			});
+				
+			});
+			
+		};
+	</script>
+<% include ../public/footer.html %>

@@ -1,0 +1,49 @@
+<% include ../public/head.html %>
+	<div class="container-fluid" id="content">
+		<div class="contentLeft">
+				<% include ../public/menu.html%>
+		</div>
+		<div class="row" id="content_right">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<span>饮食推荐 > 推荐管理</span>
+				</div>
+			</div>
+			<form id="form_id" class="form-horizontal" action="javascript:;" enctype="multipart/form-data">
+				<div class="form-group">
+					<label class="control-label col-sm-2">类别 : </label>
+					<div class="col-md-8">
+						<input type="file" name="file"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-primary">添加</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = function(){
+			var fileArray;
+			$("input[type=file]").change(function(){
+				fileArray =this.files;
+				console.log(fileArray);
+			});
+			$("button[type=button]").click(function(){
+				var data = new FormData();
+				data.append("upload",fileArray[0]);
+				jQuery.ajax({
+					url:'/admin/upload',
+					type:"post",
+					data:data,
+					contentType: false, //不可缺参数
+                    processData: false, //不可缺参数
+					success:function(result){
+						layer.msg('成功')
+					}
+				})
+				
+			});
+		}
+	</script>
+<% include ../public/footer.html %>

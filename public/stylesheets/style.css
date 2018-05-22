@@ -1,0 +1,131 @@
+html{
+		height: 100%;
+}
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 100%;
+}
+*{
+	padding: 0;
+	margin: 0;
+}
+a {
+  color: #00B7FF;
+}
+.navbar {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+#content.container-fluid{
+	padding-left: 0;
+	height: calc(100% - 52px);
+	position: relative;
+}
+.contentLeft{
+	height:100%;
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+ul#accodion{
+	height:inherit;
+	background:#212126;
+	width: 120px;
+}
+ul#accodion li{
+	color: white;
+	list-style: none;
+	line-height: 2.5;
+	/*background:#373840 ;*/
+}
+ul#accodion li>ul{
+	padding-left: 20px;
+}	
+ul#accodion li>ul li>a{
+	color: white;
+}
+ul#accodion li>a{
+	cursor: pointer;
+	text-decoration: none;
+	text-align: center;
+	display: inline-block;
+	width: 100%;
+}
+#content_right{
+	padding-left: 135px;
+}
+#content_right .panel{
+ border-radius: 0;
+}
+#content_right .panel-body span{
+	font-size: 16px;
+}
+#content_right #form_id{
+	width:60%;
+	margin: 0 auto;
+	box-shadow: 0 0 10px #DDDDDD;
+	padding: 10px;
+	
+}
+#content_right button{
+	margin: 0 auto;
+	display: block;
+	padding: 6px 60px;
+}
+/*登录*/
+.jumbotron.login{
+	width: 1000px;
+	margin: 20px auto;
+}
+.groupNew{
+	display: none;
+}
+.uploadBox{
+	
+}
+.uploadBox .imgFile{
+	height: 98px;
+	width: 98px;
+	border: 2px  dashed #eee; 
+	position: relative;
+}
+.uploadBox .imgFile input{
+	height: 98px;
+	width: 98px;
+	opacity:0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+.uploadBox .imgFile img{
+	height: 98px;
+	width: 98px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	object-fit: cover;
+}
+.uploadBox .imgFile:after{
+	content: "＋";
+	height: 98px;
+	width: 98px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: block;
+	text-align: center;
+	line-height: 98px;
+	transform: scale(2);
+	-webkit-transform: scale(2);
+	color: #666666;
+	z-index: -1;
+}
+.uploadBox>button{
+	float: left;
+	width: 98px;
+	box-sizing: border-box;
+	padding: 6px 8px!important;
+}
